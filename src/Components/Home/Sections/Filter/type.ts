@@ -8,9 +8,15 @@ export type FilterSelectType = {
   onChange: (event: SelectChangeEvent) => void
   options: SelectOptionType[],
   isMultiple?: boolean,
+  isDisabled?: boolean,
 };
 
 export type SelectOptionType = {
   value: string | number,
   label: string,
-}
+};
+
+export type SelectionType = {
+  selectedCategory: string,
+  selectedProducts: number[],
+};

@@ -2,7 +2,6 @@ import React from 'react';
 import Grid from '@mui/material/Grid'
 import ChartSection from "./Sections/Chart";
 import FilterSection from "./Sections/Filter";
-import Spinner from '../Common/Spinner';
 import './styles.scss';
 
 const Home = () => {
