@@ -4,7 +4,14 @@
   .filter-section-wrapper {
     border: 1px solid;
     .filter-section {
-      margin-right: 20px;
+      height: calc(100vh - 120px);
+      padding-right: 20px;
+      .title-area {
+        margin-bottom: 20px;
+      }
+      .filter-area {
+        min-height: 200px;
+      }
     }
   }
 }
