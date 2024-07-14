@@ -14,4 +14,10 @@
       }
     }
   }
+  .chart-container {
+    height: calc(100vh - 120px);
+    .pie-chart-container, .column-chart-container {
+      width: 100%;
+    }
+  }
 }

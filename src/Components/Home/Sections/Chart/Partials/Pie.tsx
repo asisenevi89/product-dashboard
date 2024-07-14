@@ -53,7 +53,7 @@ const PieChart = (props: PieChartPropType) => {
   } = props
   useEffect(() => {
     chartRender();
-  },[props]);
+  },[JSON.stringify(props)]);
 
   const chartRender = () => {
     HighCharts.chart({
@@ -79,7 +79,7 @@ const PieChart = (props: PieChartPropType) => {
   };
 
   return (
-    <div id="pie-chart-container" />
+    <div className="pie-chart-container" id="pie-chart-container" />
   );
 };
 
