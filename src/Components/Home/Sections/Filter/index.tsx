@@ -105,6 +105,15 @@ const FilterSection = () => {
     dispatch(setLastReportRun(Date.now()));
   };
 
+  const clearCategory = () => {
+    onClearFilters();
+  };
+
+  const clearProducts = () => {
+    setSelectedProducts([]);
+    setFiltersChanged(true);
+  };
+
   const isButtonDisabled = () => !selectedCategory || !filtersChanged;
 
   return (
@@ -136,7 +145,8 @@ const FilterSection = () => {
               selectedValue={selectedCategory}
               label="Select Category"
               onChange={onCategoryChanged}
-              options={getCategoryOptions()}    
+              options={getCategoryOptions()}
+              onClearSelection={clearCategory} 
             />
             <FilterSelect
               labelId="product-label"
@@ -146,7 +156,8 @@ const FilterSection = () => {
               onChange={onProductsChanged}
               options={getProductOptions()}
               isMultiple
-              isDisabled={!selectedCategory}    
+              isDisabled={!selectedCategory}
+              onClearSelection={clearProducts}
             />
           </Grid>
         </Grid>

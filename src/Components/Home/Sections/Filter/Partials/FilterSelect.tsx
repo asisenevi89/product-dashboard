@@ -6,6 +6,7 @@ import {
   InputLabel,
   MenuItem,
 } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { FilterSelectType } from '../type';
 
 const FilterSelect = ({
@@ -17,6 +18,7 @@ const FilterSelect = ({
   options,
   isMultiple = false,
   isDisabled = false,
+  onClearSelection,
 }: FilterSelectType) => {
   
   const disableClass = isDisabled ? 'disabled' : '';
@@ -25,6 +27,20 @@ const FilterSelect = ({
     <Box className={disableClass}>
       <FormControl fullWidth className={disableClass}>
         <InputLabel id={labelId}>{label}</InputLabel>
+        {!!selectedValue.length && (
+          <HighlightOffIcon 
+            sx={{
+              fontSize: '16px',
+              position: 'absolute',
+              right: '30px',
+              top: '20px',
+              zIndex: 20,
+              cursor: 'pointer',
+              color: '#D22B2B',
+            }}
+            onClick={onClearSelection}
+          />
+          )}
         <Select
           labelId={labelId}
           id={id}
@@ -41,6 +57,7 @@ const FilterSelect = ({
               container: document.body,
             },
           }}
+          sx={{ zIndex: 10 }}
         >
           {options.map(option => (
             <MenuItem value={option.value} key={option.value}>{option.label}</MenuItem>

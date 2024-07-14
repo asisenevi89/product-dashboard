@@ -7,6 +7,7 @@ export type FilterSelectType = {
   selectedValue: any,
   onChange: (event: SelectChangeEvent) => void
   options: SelectOptionType[],
+  onClearSelection: () => void,
   isMultiple?: boolean,
   isDisabled?: boolean,
 };
