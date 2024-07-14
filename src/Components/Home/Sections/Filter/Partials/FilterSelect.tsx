@@ -18,10 +18,12 @@ const FilterSelect = ({
   isMultiple = false,
   isDisabled = false,
 }: FilterSelectType) => {
+  
+  const disableClass = isDisabled ? 'disabled' : '';
 
   return (
-    <Box>
-      <FormControl fullWidth>
+    <Box className={disableClass}>
+      <FormControl fullWidth className={disableClass}>
         <InputLabel id={labelId}>{label}</InputLabel>
         <Select
           labelId={labelId}
@@ -31,6 +33,14 @@ const FilterSelect = ({
           onChange={onChange}
           multiple={isMultiple}
           disabled={isDisabled}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 400,
+              },
+              container: document.body,
+            },
+          }}
         >
           {options.map(option => (
             <MenuItem value={option.value} key={option.value}>{option.label}</MenuItem>

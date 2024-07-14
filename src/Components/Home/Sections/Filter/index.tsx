@@ -7,6 +7,7 @@ import {
   Button,
   Grid,
   SelectChangeEvent,
+  Box
 } from '@mui/material';
 import {
   initFetchCategories,
@@ -53,9 +54,9 @@ const FilterSection = () => {
   useEffect(() => {
     dispatch(updateSelections({
       selectedCategory,
-      selectedProducts,
+      selectedProducts: [],
     }));
-  }, [selectedCategory, JSON.stringify(selectedProducts)])
+  }, [selectedCategory]);
 
   const onCategoryChanged = (event: SelectChangeEvent) => {
     const { value } = event.target; 
@@ -97,8 +98,14 @@ const FilterSection = () => {
   
   const onRunReport = () => {
     setFiltersChanged(false);
+    dispatch(updateSelections({
+      selectedCategory,
+      selectedProducts,
+    }));
     dispatch(setLastReportRun(Date.now()));
   };
+
+  const isButtonDisabled = () => !selectedCategory || !filtersChanged;
 
   return (
     <Spinner backdropProps={{ open: categoriesLoading || productsLoading}}>
@@ -122,7 +129,6 @@ const FilterSection = () => {
             direction="column"
             justifyContent="space-around"
             className='filter-area'
-            id='zzzz'
           >
             <FilterSelect
               labelId="category-label"
@@ -144,13 +150,15 @@ const FilterSection = () => {
             />
           </Grid>
         </Grid>
-        <Button 
-          variant='contained'
-          disabled={!selectedCategory || !filtersChanged}
-          onClick={onRunReport}
-        >
-          Run Report
-        </Button>
+        <Box className={`button-wrapper ${isButtonDisabled() ? 'disabled' : ''}`}>
+          <Button
+            variant='contained'
+            disabled={isButtonDisabled()}
+            onClick={onRunReport}
+          >
+            Run Report
+          </Button>
+        </Box>
       </Grid>
     </Spinner>
   );
