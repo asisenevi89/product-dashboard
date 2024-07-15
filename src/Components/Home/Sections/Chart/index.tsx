@@ -17,7 +17,7 @@ import PieChart from './Partials/Pie';
 import ColumnChart from './Partials/Column';
 import Spinner from '../../../Common/Spinner';
 import { CategoryType, ProductType } from '../../../../CustomTypes';
-import { DEFAULT_CURRENCY } from '../../../../Utils/Constants';
+import { DEFAULT_CURRENCY, LOADER_TIME } from '../../../../Utils/Constants';
 
 type ColumnDataType = {
   seriesData: HighCharts.SeriesColumnOptions[],
@@ -56,7 +56,7 @@ const ChartSection = () => {
   
     setTimeout(() => {
       setRunningReport(false);
-    }, 3000)
+    }, LOADER_TIME);
   }, [lastReportRun, selectedCategory]);
 
   const getSelectedCategoryName = (): string => {
