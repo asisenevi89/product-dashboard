@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
 import HighCharts from 'highcharts';
 import { Grid } from '@mui/material';
@@ -13,7 +13,6 @@ import {
   makeLastReportRun,
 } from '../../../../Selectors';
 import { makeSelectedCategory } from '../../../../Selectors';
-import { usePrevious } from '../../../../Utils/CustomHooks';
 import PieChart from './Partials/Pie';
 import ColumnChart from './Partials/Column';
 import Spinner from '../../../Common/Spinner';
@@ -45,8 +44,20 @@ const ChartSection = () => {
     selectedProducts,
     lastReportRun,
   } = useSelector(stateSelector);
-  const prevValues = usePrevious({ lastReportRun });
-  const prevReportRun = _get(prevValues, 'lastReportRun', 0);
+  const [runningReport, setRunningReport] = useState(false);
+
+  useEffect(() => {    
+    if (!lastReportRun && !selectedProducts.length) {
+      setRunningReport(false);
+      return;
+    }
+
+    setRunningReport(true);
+  
+    setTimeout(() => {
+      setRunningReport(false);
+    }, 3000)
+  }, [lastReportRun, selectedCategory]);
 
   const getSelectedCategoryName = (): string => {
     const category: any = categories.find(
@@ -100,7 +111,11 @@ const ChartSection = () => {
     let title = {};
     let subTitle = {};
 
-    if (lastReportRun !== prevReportRun) {
+    if (runningReport) {
+      return null;
+    }
+
+    if (lastReportRun) {
       const { seriesData, xAxisData } = getColumnChartSeriesData();
       const categoryName = getSelectedCategoryName();
       const yAxisData = {
@@ -131,7 +146,11 @@ const ChartSection = () => {
   };
 
   return (
-    <Spinner backdropProps={{ open: categoriesLoading || productsLoading }}>
+    <Spinner
+      backdropProps={{
+        open: categoriesLoading || productsLoading || runningReport
+      }}
+    >
       <Grid container className='chart-container' alignItems='center'>
         {renderChart()}
       </Grid>

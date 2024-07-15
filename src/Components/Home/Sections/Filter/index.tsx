@@ -91,6 +91,7 @@ const FilterSection = () => {
     setSelectedCategory('');
     setSelectedProducts([]);
     setFiltersChanged(false);
+    dispatch(setLastReportRun(0));
   };
   
   const onRunReport = () => {
@@ -117,6 +118,7 @@ const FilterSection = () => {
       selectedCategory,
       selectedProducts: [],
     }));
+    dispatch(setLastReportRun(0));
   };
 
   const isButtonDisabled = () => !selectedCategory || !filtersChanged;
