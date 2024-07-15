@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import _set from 'lodash/set';
 import { SelectionType } from '../Components/Home/Sections/Filter/type';
+import { MultiSelectType } from '../Components/Home/Sections/Filter/type';
 
-const initialProducts: number[] = []
+const initialProducts: MultiSelectType = []
 
 const initialState = {
   lastReportRun: 0,

@@ -1,5 +1,7 @@
 import { SelectChangeEvent } from '@mui/material';
 
+export type MultiSelectType = number[] | string[];
+
 export type FilterSelectType = {
   id: string,
   label: string,
@@ -19,5 +21,5 @@ export type SelectOptionType = {
 
 export type SelectionType = {
   selectedCategory: string,
-  selectedProducts: number[],
+  selectedProducts: MultiSelectType,
 };

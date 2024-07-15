@@ -49,7 +49,7 @@ const ChartSection = () => {
   const prevReportRun = _get(prevValues, 'lastReportRun', 0);
 
   const getSelectedCategoryName = (): string => {
-    const category: any= categories.find(
+    const category: any = categories.find(
       (category: CategoryType) => category.slug === selectedCategory
     );
   

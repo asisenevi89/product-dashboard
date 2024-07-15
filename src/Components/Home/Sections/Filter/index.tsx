@@ -1,7 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import _uniq from 'lodash/uniq';
 import {
   Typography,
   Button,
@@ -26,6 +25,7 @@ import {
 import FilterSelect from './Partials/FilterSelect';
 import Spinner from '../../../Common/Spinner';
 import { CategoryType, ProductType } from '../../../../CustomTypes';
+import { MultiSelectType } from './type';
 
 const stateSelector = createStructuredSelector({
   categoriesLoading: (state) => makeCategoriesLoading(state),
@@ -44,7 +44,7 @@ const FilterSection = () => {
   } = useSelector(stateSelector);
 
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<MultiSelectType>([]);
   const [filtersChanged, setFiltersChanged] = useState(false)
 
   useEffect(() => {
@@ -69,10 +69,7 @@ const FilterSection = () => {
 
   const onProductsChanged = (event: SelectChangeEvent) => {
     const { value } = event.target;
-    const updatedArr = Array.isArray(value)
-      ? [...selectedProducts, ...value]
-      : [...selectedProducts, parseInt(value)]
-    const updated = _uniq(updatedArr);
+    const updated: MultiSelectType = [...value]
 
     if (JSON.stringify(updated) === JSON.stringify(selectedProducts)) return;
     
@@ -112,6 +109,14 @@ const FilterSection = () => {
   const clearProducts = () => {
     setSelectedProducts([]);
     setFiltersChanged(true);
+    
+    /* To Show the Pie chart with Products of selected categories 
+    *  after clearing selected products
+    */
+    dispatch(updateSelections({
+      selectedCategory,
+      selectedProducts: [],
+    }));
   };
 
   const isButtonDisabled = () => !selectedCategory || !filtersChanged;
